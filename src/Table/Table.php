@@ -76,13 +76,13 @@ abstract class Table {
      }
 
      public function delete (int $id)
-    {
-        $query = $this->pdo->prepare("DELETE FROM {$this->table} WHERE id = ?");
-        $ok = $query->execute([$id]);
-        if ($ok === false) {
-            throw new \Exception("Impossible de supprimer l'enregistrement $id dans la table {$this->table}");
-        }
-        $this->pdo->query("ALTER TABLE {$this->table} AUTO_INCREMENT = 1");
-    }
+     {
+          $query = $this->pdo->prepare("DELETE FROM {$this->table} WHERE id = ?");
+          $ok = $query->execute([$id]);
+          if ($ok === false) {
+               throw new \Exception("Impossible de supprimer l'enregistrement $id dans la table {$this->table}");
+          }
+          $this->pdo->query("ALTER TABLE {$this->table} AUTO_INCREMENT = 1");
+     }
 
 }

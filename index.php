@@ -6,6 +6,7 @@
     <title>Dragonball Fighters</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/fe11bb2046.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light" style="background: #F85B1A">
@@ -52,14 +53,20 @@
 
         // Administration des personnages
         SimpleRouter::get('/all', function() {require 'views/all.php';})->name('all');
-        SimpleRouter::post('/delete/{id}', function($id) {require 'views/delete.php';})->name('delete');
-        SimpleRouter::form('/edit/{id}', function($id) {require 'views/edit.php';})->name('edit');
+        SimpleRouter::post('/delete/{id}', function(int $id) {require 'views/delete.php';})->name('delete');
+        SimpleRouter::form('/edit/{id}', function(int $id) {require 'views/edit.php';})->name('edit');
         SimpleRouter::form('/new', function() {require 'views/new.php';})->name('new');
+        SimpleRouter::post('/reset', function() {require 'views/reset.php';})->name('reset');
 
+        //Combat
+        SimpleRouter::post('/attack/{attacker}/{defender}', function(int $attackerId, int $defenderId) {require 'views/attack.php';})->name('attack');
+
+        //Not found
         SimpleRouter::get('/not-found', function (){require 'views/error.php';});
 
+        //Redirection si la route n'existe pas ou que la méthode n'est pas bonne
         SimpleRouter::error(function(Request $request, \Exception $exception) {
-            if($exception instanceof NotFoundHttpException && $exception->getCode() === 404) {
+            if(($exception instanceof NotFoundHttpException && $exception->getCode() === 404) || ($exception instanceof NotFoundHttpException && $exception->getCode() === 403)) {
                 response()->redirect('/not-found');
             }
 
@@ -71,7 +78,7 @@
         ?>
         
     </div>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>

@@ -1,0 +1,22 @@
+.card {
+     user-select: none;
+}
+
+.card.notAlive {
+     cursor: not-allowed;
+     background: #6C757D!important;
+}
+
+.card.alive, .areas {
+     cursor: pointer;
+}
+
+.areas {
+     border: 3px solid white;
+}
+
+.selected {
+     border: 3px solid #5b5bee;
+     border-radius: 10px;
+     transition: border-color .3s ease;
+}

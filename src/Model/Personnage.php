@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use \Exception;
+
 class Personnage {
 
      private $id;
@@ -82,9 +84,29 @@ class Personnage {
           return $this;
      }
 
-     public function attaque(Personnage $target)
+     public function canAttack(Personnage $target)
      {
-          $target->setHp($target->getHp() - $this->getAtk());
+          if ($this->isAlive() && $target->isAlive()){
+               if ($this->getType() === 'ally'){
+                    return ($target->getType() === 'enemy') ? true : false;
+               } else {
+                    return true;
+               }
+          }
+          return false;
+     }
+
+     public function isAlive(){
+          return ($this->getHp() > 0) ? true : false;
+     }
+
+     public function attack(Personnage $target)
+     {
+          if ($this->canAttack($target)){
+               ($target->getHp() - $this->getAtk() > 0) ? $target->setHp($target->getHp() - $this->getAtk()) : $target->setHp(0);
+          } else {
+               throw new Exception('Impossible d\'attaquer ce personnage');
+          }
      }
 
      public static function getCount() {

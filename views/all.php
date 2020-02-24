@@ -8,6 +8,8 @@ $table = new PersonnageTable($pdo);
 $personnages = $table->all();
 
 ?>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+
 <?php if(isset($_GET['delete'])):?>
      <div class="alert alert-danger alert-dismissible fade show" role="alert">
           Le personnage à bien été supprimé
@@ -35,7 +37,7 @@ $personnages = $table->all();
                <td><?= $personnage->getName() ?></td>
                <td><?= $personnage->getAtk() ?></td>
                <td><?= $personnage->getHp() ?></td>
-               <td><?= $personnage->getType() ?></td>
+               <td><?= ($personnage->getType() === 'ally') ? 'Allié' : ( ($personnage->getType() === 'enemy') ? 'Ennemi' : 'Traître' ) ?></td>
                <td>
                     <a href="<?= url('edit', ['id' => $personnage->getId()]) ?>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i>Editer</a>
                     <form action="<?= url('delete', ['id' => $personnage->getId()]) ?>" method="POST" class="d-inline" onsubmit="return confirm('Voulez vous vraiment effectuer cette action ?')">
@@ -48,6 +50,6 @@ $personnages = $table->all();
 </table>
 
 <a href="<?= url('new') ?>" class="btn btn-primary">Créer un nouveau personnage</a>
-
-<hr class="mt-5">
-<small>Ally: Allié <br> Traitor: Traître <br> Enemy: Ennemi</small>
+<form action="<?= url('reset') ?>" method="POST" class="d-inline float-right">
+     <button class="btn btn-secondary">Réinitialiser les personnages</button>
+</form>
