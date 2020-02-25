@@ -69,7 +69,7 @@ class Personnage {
 
      public function setAtk (int $atk): self
      {
-          $this->atk = $atk;
+          ($atk > 10) ? $this->atk = $atk : $this->atk = 10;
           return $this;
      }
 
@@ -80,7 +80,7 @@ class Personnage {
 
      public function setHp (int $hp): self
      {
-          $this->hp = $hp;
+          ($hp > 100) ? $this->hp = $hp : $this->hp = 100;
           return $this;
      }
 
