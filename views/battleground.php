@@ -3,11 +3,11 @@
 <?php
 
 use App\Connection;
-use App\Model\Personnage;
 use App\Table\PersonnageTable;
 
 $pdo = Connection::getPDO();
 $table = new PersonnageTable($pdo);
+$table->createTableIfNotExists();
 $personnages = $table->all();
 
 $sg = $personnages[0];

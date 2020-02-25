@@ -5,6 +5,7 @@ use App\Table\PersonnageTable;
 
 $pdo = Connection::getPDO();
 $table = new PersonnageTable($pdo);
+$table->createTableIfNotExists();
 $personnages = $table->all();
 
 ?>

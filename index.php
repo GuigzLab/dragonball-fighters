@@ -37,9 +37,9 @@
         <?php
         require 'vendor/autoload.php';
     
-        $whoops = new \Whoops\Run;
-        $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-        $whoops->register();
+        // $whoops = new \Whoops\Run;
+        // $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+        // $whoops->register();
     
         use Pecee\Http\Request;
         use Pecee\SimpleRouter\SimpleRouter;

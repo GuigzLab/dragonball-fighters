@@ -2,7 +2,6 @@
 
 namespace App\Table;
 
-use App\Model\Personnage;
 use \PDO;
 
 abstract class Table {
@@ -80,9 +79,32 @@ abstract class Table {
           $query = $this->pdo->prepare("DELETE FROM {$this->table} WHERE id = ?");
           $ok = $query->execute([$id]);
           if ($ok === false) {
-               throw new \Exception("Impossible de supprimer l'enregistrement $id dans la table {$this->table}");
+               throw new \Exception("Impossible de supprimer l'enregistrement #$id dans la table {$this->table}");
           }
           $this->pdo->query("ALTER TABLE {$this->table} AUTO_INCREMENT = 1");
+     }
+
+     public function createTableIfNotExists(){
+          $this->pdo->query("CREATE TABLE IF NOT EXISTS $this->table (
+               `id` int(11) NOT NULL AUTO_INCREMENT,
+               `name` varchar(20) NOT NULL,
+               `atk` int(3) NOT NULL,
+               `hp` int(3) NOT NULL,
+               `type` varchar(10) DEFAULT 'ally',
+               PRIMARY KEY (`id`)
+             ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;");
+     }
+
+     public function reset (){
+          $this->pdo->query("DROP TABLE IF EXISTS $this->table;");
+          $this->createTableIfNotExists();
+          $this->pdo->query("INSERT INTO $this->table (`id`, `name`, `atk`, `hp`, `type`) VALUES
+          (1, 'Son Goku', 100, 1300, 'ally'),
+          (2, 'Vegeta', 200, 800, 'traitor'),
+          (3, 'Son Gohan', 50, 600, 'ally'),
+          (4, 'Freezer', 300, 2000, 'enemy'),
+          (5, 'Piccolo', 50, 800, 'ally'),
+          (6, 'Cell', 200, 2000, 'enemy');");
      }
 
 }
