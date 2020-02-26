@@ -80,7 +80,7 @@ class Personnage {
 
      public function setHp (int $hp): self
      {
-          ($hp > 100) ? $this->hp = $hp : $this->hp = 100;
+          ($hp > 0) ? $this->hp = $hp : $this->hp = 0;
           return $this;
      }
 
