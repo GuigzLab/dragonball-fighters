@@ -14,6 +14,7 @@ $button = "Créer";
 if (isset($_POST['name'], $_POST['atk'], $_POST['hp'], $_POST['type'])){
      $pdo = Connection::getPDO();
      $table = new PersonnageTable($pdo);
+     $table->createTableIfNotExists();
      $data = [
           'name' => $_POST['name'], 
           'atk' => (int)$_POST['atk'], 
